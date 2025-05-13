@@ -1,18 +1,13 @@
-channel c_channel = [0] of {int};
+proctype switch_example() {
+    int x = 2;
 
-active proctype sender() {
-    int msg;
-    msg = 42; // Example message
-    c_channel!msg; // Send message
-}
-
-active proctype receiver() {
-    int msg;
-    c_channel?msg; // Receive message
-    // Process the received message
+    if
+    :: (x == 1) -> printf("One\n");
+    :: (x == 2) -> printf("Two\n");
+    :: else -> printf("Other\n");
+    fi;
 }
 
 init {
-    run sender();
-    run receiver();
+    run switch_example();
 }

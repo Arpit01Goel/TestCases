@@ -1,32 +1,28 @@
 #include <stdio.h>
+#include <pthread.h>
 
-enum State { START, PROCESS, END };
+int buffer = 0;
+
+void *producer(void *arg) {
+    buffer = 1; // Produce an item
+    printf("Produced: %d\n", buffer);
+    return NULL;
+}
+
+void *consumer(void *arg) {
+    printf("Consumed: %d\n", buffer);
+    buffer = 0; // Consume the item
+    return NULL;
+}
 
 int main() {
-    enum State currentState = START;
-    int input;
+    pthread_t prod, cons;
 
-    while (1) {
-        switch (currentState) {
-            case START:
-                printf("Enter a number (1 to process, 0 to exit): ");
-                scanf("%d", &input);
-                if (input == 1) {
-                    currentState = PROCESS;
-                } else {
-                    currentState = END;
-                }
-                break;
+    pthread_create(&prod, NULL, producer, NULL);
+    pthread_join(prod, NULL);
 
-            case PROCESS:
-                printf("Processing...\n");
-                // Simulate some processing
-                currentState = START;
-                break;
+    pthread_create(&cons, NULL, consumer, NULL);
+    pthread_join(cons, NULL);
 
-            case END:
-                printf("Exiting...\n");
-                return 0;
-        }
-    }
+    return 0;
 }

@@ -1,20 +1,17 @@
-mtype = {STATE1, STATE2, STATE3};
+chan buffer = [1] of { int }; // Channel to simulate the buffer
 
-active proctype StateMachine() {
-    mtype state = STATE1;
+proctype producer() {
+    buffer!1; // Produce an item
+    printf("Produced: %d\n", 1);
+}
 
-    do
-    :: state == STATE1 ->
-        printf("State 1\n");
-        state = STATE2;
+proctype consumer() {
+    int item;
+    buffer?item; // Consume the item
+    printf("Consumed: %d\n", item);
+}
 
-    :: state == STATE2 ->
-        printf("State 2\n");
-        state = STATE3;
-
-    :: state == STATE3 ->
-        printf("State 3\n");
-        state = STATE1;
-
-    od
+init {
+    run producer();
+    run consumer();
 }

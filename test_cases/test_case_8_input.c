@@ -1,15 +1,14 @@
 #include <stdio.h>
 
-void manipulateData(int *ptr) {
-    *ptr += 10; // Increment the value pointed to by ptr
+int global_var = 10;
+
+void increment() {
+    global_var++;
 }
 
 int main() {
-    int value = 5;
-    printf("Original value: %d\n", value);
-    
-    manipulateData(&value); // Pass the address of value to the function
-    
-    printf("Modified value: %d\n", value);
+    printf("Before increment: %d\n", global_var);
+    increment();
+    printf("After increment: %d\n", global_var);
     return 0;
 }

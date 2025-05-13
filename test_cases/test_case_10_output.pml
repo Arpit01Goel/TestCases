@@ -1,21 +1,15 @@
-mtype = {msg1, msg2};
-
-chan c = [0] of {mtype};
-
-active proctype Sender() {
-    c!msg1;
-}
-
-active proctype Receiver() {
-    mtype m;
-    c?m;
+proctype factorial(int n, int result) {
     if
-    :: m == msg1 -> /* Handle msg1 */
-    :: else -> /* Handle other messages */
+    :: (n == 0) -> result = 1;
+    :: else -> 
+        int temp;
+        run factorial(n - 1, temp); // Recursive call
+        result = n * temp;
     fi;
 }
 
 init {
-    run Sender();
-    run Receiver();
+    int result;
+    run factorial(5, result);
+    printf("Factorial: %d\n", result);
 }

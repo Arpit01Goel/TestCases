@@ -1,16 +1,14 @@
-mtype = { REQUEST, RESPONSE };
-
-chan c = [0] of { mtype };
-
-active proctype RecursiveFunction(int n) {
-    if
-    :: n <= 0 -> c!RESPONSE; // Base case
-    :: else -> 
-        RecursiveFunction(n - 1); // Recursive call
-    fi;
+proctype swap(int a, int b) {
+    int temp;
+    temp = a;
+    a = b;
+    b = temp;
+    printf("After swap: a = %d, b = %d\n", a, b);
 }
 
 init {
-    c!REQUEST; // Initial request
-    RecursiveFunction(5); // Start recursion with a sample value
+    int x = 5;
+    int y = 10;
+    printf("Before swap: x = %d, y = %d\n", x, y);
+    run swap(x, y);
 }
