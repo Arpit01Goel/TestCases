@@ -1,17 +1,12 @@
-int condition_var = 0;
+proctype bitwise_operations() {
+    int a = 10;
+    int b = 20;
 
-active proctype Producer() {
-    do
-    :: condition_var == 0 -> 
-        condition_var = 1; // Signal that the condition is met
-        printf("Produced\n");
-    od
+    printf("Bitwise AND: %d\n", a & b);
+    printf("Bitwise OR: %d\n", a | b);
+    printf("Bitwise XOR: %d\n", a ^ b);
 }
 
-active proctype Consumer() {
-    do
-    :: condition_var == 1 -> 
-        condition_var = 0; // Reset the condition
-        printf("Consumed\n");
-    od
+init {
+    run bitwise_operations();
 }

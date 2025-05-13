@@ -1,29 +1,19 @@
-int main() {
-    int running = 1;
-    while (running) {
-        // Game logic here
-        // For example, check for user input to continue or exit
-        int userInput;
-        printf("Enter 1 to continue, 0 to exit: ");
-        scanf("%d", &userInput);
-        if (userInput == 0) {
-            running = 0; // Exit the loop
-        }
-    }
-    return 0;
+proctype nested_loops() {
+    int i = 0;
+    int j;
+
+    do
+    :: (i < 3) ->
+        j = 0;
+        do
+        :: (j < 3) -> printf("i: %d, j: %d\n", i, j); j = j + 1;
+        :: (j >= 3) -> break;
+        od;
+        i = i + 1;
+    :: (i >= 3) -> break;
+    od;
 }
 
-promela
-proctype GameLoop() {
-    int running = 1;
-    do
-    :: running == 1 ->
-        // Game logic here
-        // For example, simulate user input
-        int userInput = 1; // Simulating user input for demonstration
-        if
-        :: userInput == 0 -> running = 0 // Exit the loop
-        :: else -> skip
-        fi
-    od
+init {
+    run nested_loops();
 }

@@ -1,26 +1,23 @@
 #include <stdio.h>
 
-typedef struct {
-    int id;
-    char name[50];
-} Student;
-
-void printStudent(Student s) {
-    printf("Student ID: %d\n", s.id);
-    printf("Student Name: %s\n", s.name);
-}
+enum State { IDLE, RUNNING, STOPPED };
 
 int main() {
-    Student student1;
-    student1.id = 1;
-    snprintf(student1.name, sizeof(student1.name), "Alice");
+    enum State current_state = IDLE;
 
-    Student student2;
-    student2.id = 2;
-    snprintf(student2.name, sizeof(student2.name), "Bob");
+    if (current_state == IDLE) {
+        printf("System is idle\n");
+        current_state = RUNNING;
+    }
 
-    printStudent(student1);
-    printStudent(student2);
+    if (current_state == RUNNING) {
+        printf("System is running\n");
+        current_state = STOPPED;
+    }
+
+    if (current_state == STOPPED) {
+        printf("System is stopped\n");
+    }
 
     return 0;
 }

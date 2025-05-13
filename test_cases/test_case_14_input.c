@@ -1,35 +1,24 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-struct Node {
-    int data;
-    struct Node* next;
-};
+int balance = 1000;
 
-void insert(struct Node** head_ref, int new_data) {
-    struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
-    new_node->data = new_data;
-    new_node->next = (*head_ref);
-    (*head_ref) = new_node;
+void deposit(int amount) {
+    balance += amount;
+    printf("Deposited: %d, Balance: %d\n", amount, balance);
 }
 
-void printList(struct Node* node) {
-    while (node != NULL) {
-        printf("%d -> ", node->data);
-        node = node->next;
+void withdraw(int amount) {
+    if (balance >= amount) {
+        balance -= amount;
+        printf("Withdrawn: %d, Balance: %d\n", amount, balance);
+    } else {
+        printf("Insufficient balance\n");
     }
-    printf("NULL\n");
 }
 
 int main() {
-    struct Node* head = NULL;
-
-    insert(&head, 1);
-    insert(&head, 2);
-    insert(&head, 3);
-
-    printf("Linked list: ");
-    printList(head);
-
+    deposit(500);
+    withdraw(300);
+    withdraw(1500);
     return 0;
 }

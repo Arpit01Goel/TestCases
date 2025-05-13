@@ -1,27 +1,20 @@
-mtype = { request, response };
+int balance = 1000; // Global balance variable
 
-chan c = [0] of { mtype };
+proctype deposit(int amount) {
+    balance = balance + amount;
+    printf("Deposited: %d, Balance: %d\n", amount, balance);
+}
 
-active proctype Node() {
-    int value;
-    Node* next;
-
-    // Initialize the linked list
-    value = 0;
-    next = NULL;
-
-    // Simulate linked list operations
-    do
-    :: c!request; // Request to add a node
-       // Logic to add a node
-       value++;
-       printf("Node added with value: %d\n", value);
-    :: c!response; // Response after adding a node
-       // Logic to respond
-       printf("Node response sent for value: %d\n", value);
-    od;
+proctype withdraw(int amount) {
+    if
+    :: (balance >= amount) -> balance = balance - amount;
+       printf("Withdrawn: %d, Balance: %d\n", amount, balance);
+    :: else -> printf("Insufficient balance\n");
+    fi;
 }
 
 init {
-    run Node();
+    run deposit(500);
+    run withdraw(300);
+    run withdraw(1500);
 }

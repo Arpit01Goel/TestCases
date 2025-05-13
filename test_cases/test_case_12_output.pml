@@ -1,14 +1,15 @@
-proctype swap(int a, int b) {
+int x = 5;
+int y = 10;
+
+proctype swap() {
     int temp;
-    temp = a;
-    a = b;
-    b = temp;
-    printf("After swap: a = %d, b = %d\n", a, b);
+    temp = x;
+    x = y;
+    y = temp;
+    printf("After swap: x = %d, y = %d\n", x, y);
 }
 
 init {
-    int x = 5;
-    int y = 10;
     printf("Before swap: x = %d, y = %d\n", x, y);
-    run swap(x, y);
+    run swap();
 }

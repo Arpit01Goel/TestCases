@@ -1,28 +1,15 @@
-typedef struct {
-    int id;
-    char name[20];
-} Person;
+mtype = { IDLE, RUNNING, STOPPED }; // Enum equivalent
 
-void printPerson(Person p) {
-    printf("ID: %d, Name: %s\n", p.id, p.name);
+proctype state_machine() {
+    mtype current_state = IDLE;
+
+    if
+    :: (current_state == IDLE) -> printf("System is idle\n"); current_state = RUNNING;
+    :: (current_state == RUNNING) -> printf("System is running\n"); current_state = STOPPED;
+    :: (current_state == STOPPED) -> printf("System is stopped\n");
+    fi;
 }
 
-int main() {
-    Person p1;
-    p1.id = 1;
-    strcpy(p1.name, "Alice");
-    
-    printPerson(p1);
-    
-    return 0;
-}
-
-mtype = { ID, NAME };
-
-active proctype Person() {
-    Person p1;
-    p1.id = 1;
-    p1.name = "Alice";
-    
-    printf("ID: %d, Name: %s\n", p1.id, p1.name);
+init {
+    run state_machine();
 }

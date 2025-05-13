@@ -1,26 +1,16 @@
 #include <stdio.h>
-#include <pthread.h>
-
-#define NUM_THREADS 5
-
-void* threadFunction(void* arg) {
-    int threadID = *((int*)arg);
-    printf("Thread %d is running\n", threadID);
-    return NULL;
-}
+#include <stdlib.h>
 
 int main() {
-    pthread_t threads[NUM_THREADS];
-    int threadIDs[NUM_THREADS];
+    int *arr = (int *)malloc(3 * sizeof(int));
+    arr[0] = 1;
+    arr[1] = 2;
+    arr[2] = 3;
 
-    for (int i = 0; i < NUM_THREADS; i++) {
-        threadIDs[i] = i;
-        pthread_create(&threads[i], NULL, threadFunction, (void*)&threadIDs[i]);
+    for (int i = 0; i < 3; i++) {
+        printf("arr[%d]: %d\n", i, arr[i]);
     }
 
-    for (int i = 0; i < NUM_THREADS; i++) {
-        pthread_join(threads[i], NULL);
-    }
-
+    free(arr);
     return 0;
 }

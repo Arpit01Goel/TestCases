@@ -1,30 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX 100
+struct Node {
+    int data;
+    struct Node* next;
+};
 
-typedef struct {
-    int id;
-    char name[50];
-} Student;
-
-void printStudent(Student s) {
-    printf("ID: %d, Name: %s\n", s.id, s.name);
+void print_list(struct Node* head) {
+    struct Node* temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
 }
 
 int main() {
-    Student students[MAX];
-    int count = 0;
+    struct Node* head = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* second = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* third = (struct Node*)malloc(sizeof(struct Node));
 
-    for (int i = 0; i < MAX; i++) {
-        students[i].id = i + 1;
-        snprintf(students[i].name, sizeof(students[i].name), "Student%d", i + 1);
-        count++;
-    }
+    head->data = 1;
+    head->next = second;
 
-    for (int i = 0; i < count; i++) {
-        printStudent(students[i]);
-    }
+    second->data = 2;
+    second->next = third;
+
+    third->data = 3;
+    third->next = NULL;
+
+    print_list(head);
+
+    free(head);
+    free(second);
+    free(third);
 
     return 0;
 }

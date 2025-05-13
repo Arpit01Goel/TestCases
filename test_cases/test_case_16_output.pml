@@ -1,17 +1,22 @@
-channel c = [0] of {int};
+typedef Node {
+    int data;
+    int next; // Simulating a pointer with an index
+}
 
-#define SQUARE(x) (x * x)
+Node list[3]; // Simulating a linked list with an array
 
-active proctype Test() {
-    int result;
-    int value = 5;
-
-    result = SQUARE(value);
-    
-    c!result;
+proctype print_list() {
+    int i = 0;
+    do
+    :: (i < 3) -> printf("%d -> ", list[i].data); i = list[i].next;
+    :: (i == -1) -> printf("NULL\n"); break;
+    od;
 }
 
 init {
-    int received;
-    c?received;
+    list[0].data = 1; list[0].next = 1;
+    list[1].data = 2; list[1].next = 2;
+    list[2].data = 3; list[2].next = -1;
+
+    run print_list();
 }

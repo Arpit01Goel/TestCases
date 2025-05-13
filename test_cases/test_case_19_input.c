@@ -1,31 +1,30 @@
 #include <stdio.h>
+#include <semaphore.h>
+#include <pthread.h>
 
-enum State { START, PROCESSING, END };
+sem_t semaphore;
 
-void processState(enum State state) {
-    switch (state) {
-        case START:
-            printf("Starting process...\n");
-            break;
-        case PROCESSING:
-            printf("Processing...\n");
-            break;
-        case END:
-            printf("Ending process...\n");
-            break;
-        default:
-            printf("Unknown state!\n");
-    }
+void *thread_function(void *arg) {
+    sem_wait(&semaphore);
+    printf("Thread %d is running\n", *(int *)arg);
+    sem_post(&semaphore);
+    return NULL;
 }
 
 int main() {
-    enum State currentState = START;
+    pthread_t threads[3];
+    int thread_ids[3] = {1, 2, 3};
 
-    processState(currentState);
-    currentState = PROCESSING;
-    processState(currentState);
-    currentState = END;
-    processState(currentState);
+    sem_init(&semaphore, 0, 1);
 
+    for (int i = 0; i < 3; i++) {
+        pthread_create(&threads[i], NULL, thread_function, &thread_ids[i]);
+    }
+
+    for (int i = 0; i < 3; i++) {
+        pthread_join(threads[i], NULL);
+    }
+
+    sem_destroy(&semaphore);
     return 0;
 }

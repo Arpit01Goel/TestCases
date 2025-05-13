@@ -1,24 +1,18 @@
-mtype = { ADD, SUB, MUL, DIV };
+chan file_channel = [1] of { mtype, byte[50] }; // Simulating file operations
 
-chan request = [0] of { mtype, int, int };
-chan response = [0] of { int };
+mtype = { WRITE, READ };
 
-active proctype calculator() {
-    mtype op;
-    int a, b, result;
+proctype file_operations() {
+    byte buffer[50];
 
-    do
-    :: request?op, a, b ->
-        if
-        :: op == ADD -> result = a + b
-        :: op == SUB -> result = a - b
-        :: op == MUL -> result = a * b
-        :: op == DIV -> 
-            if
-            :: b != 0 -> result = a / b
-            :: else -> result = -1 // Error case for division by zero
-            fi
-        fi;
-        response!result
-    od;
+    // Simulate writing to a file
+    file_channel!WRITE, "Hello, World!\n";
+
+    // Simulate reading from a file
+    file_channel?READ, buffer;
+    printf("Read from file: %s", buffer);
+}
+
+init {
+    run file_operations();
 }

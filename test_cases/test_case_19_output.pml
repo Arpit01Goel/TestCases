@@ -1,18 +1,16 @@
-mtype = {STATE1, STATE2, STATE3};
+chan semaphore = [1] of { int }; // Semaphore channel
 
-active proctype StateMachine() {
-    mtype current_state;
-    current_state = STATE1;
+proctype thread_function(int id) {
+    int token;
+    semaphore?token; // Wait for semaphore
+    printf("Thread %d is running\n", id);
+    semaphore!1; // Release semaphore
+}
 
-    do
-    :: current_state == STATE1 ->
-        printf("Current State: STATE1\n");
-        current_state = STATE2;
-    :: current_state == STATE2 ->
-        printf("Current State: STATE2\n");
-        current_state = STATE3;
-    :: current_state == STATE3 ->
-        printf("Current State: STATE3\n");
-        current_state = STATE1;
-    od;
+init {
+    semaphore!1; // Initialize semaphore with 1 token
+
+    run thread_function(1);
+    run thread_function(2);
+    run thread_function(3);
 }

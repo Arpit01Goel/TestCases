@@ -1,29 +1,16 @@
-int main() {
-    int i;
-    int count = 0;
+proctype dynamic_memory() {
+    int arr[3];
+    arr[0] = 1;
+    arr[1] = 2;
+    arr[2] = 3;
 
-    // Create threads
-    thread t1() {
-        for (i = 0; i < 10; i++) {
-            count++;
-        }
-    }
+    int i = 0;
+    do
+    :: (i < 3) -> printf("arr[%d]: %d\n", i, arr[i]); i = i + 1;
+    :: (i >= 3) -> break;
+    od;
+}
 
-    thread t2() {
-        for (i = 0; i < 10; i++) {
-            count--;
-        }
-    }
-
-    // Start threads
-    run t1;
-    run t2;
-
-    // Wait for threads to finish
-    wait t1;
-    wait t2;
-
-    // Final count
-    assert(count == 0);
-    return 0;
+init {
+    run dynamic_memory();
 }

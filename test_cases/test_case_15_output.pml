@@ -1,19 +1,15 @@
-int main() {
-    int error_code = 0;
+mtype = { RED, GREEN, BLUE }; // Enum equivalent
 
-    // Simulate some operations
-    error_code = performOperation();
+proctype color_example() {
+    mtype c = GREEN;
 
-    // Error handling
-    if (error_code != 0) {
-        printf("Error occurred: %d\n", error_code);
-        return error_code;
-    }
-
-    return 0;
+    if
+    :: (c == RED) -> printf("Color is Red\n");
+    :: (c == GREEN) -> printf("Color is Green\n");
+    :: (c == BLUE) -> printf("Color is Blue\n");
+    fi;
 }
 
-int performOperation() {
-    // Simulate an operation that may fail
-    return -1; // Simulating an error
+init {
+    run color_example();
 }

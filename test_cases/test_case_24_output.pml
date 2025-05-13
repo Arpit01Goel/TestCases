@@ -1,20 +1,13 @@
-mtype = { produce, consume };
+proctype arithmetic_operations() {
+    int a = 5;
+    int b = 10;
 
-chan buffer = [0] of { mtype };
-
-active proctype producer() {
-    do
-    :: buffer!produce; // Produce an item
-    od
-}
-
-active proctype consumer() {
-    do
-    :: buffer?consume; // Consume an item
-    od
+    printf("Sum: %d\n", a + b);
+    printf("Difference: %d\n", a - b);
+    printf("Product: %d\n", a * b);
+    printf("Quotient: %d\n", a / b);
 }
 
 init {
-    run producer();
-    run consumer();
+    run arithmetic_operations();
 }
